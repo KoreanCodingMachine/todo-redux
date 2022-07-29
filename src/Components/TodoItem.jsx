@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const TodoItem = ({ item, onToggle, onRemove }) => {
+  console.log(item);
   return (
     <Border>
-      <Link to={`/detail/${item.id}`} item={item}>
+      <Link to={`/detail/${item.id}`} state={{ item: item }} className='link'>
         상세보기
       </Link>
       <h2>{item.title}</h2>
@@ -51,6 +52,12 @@ const Border = styled.div`
   border-radius: 12px;
   padding: 12px 12px 24px;
   min-height: 150px;
+
+  .link {
+    text-decoration: none;
+    color: blue;
+  }
+
   a {
     cursor: pointer;
   }
