@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const Form = () => {
+const Form = ({ onInsert, onChangeInput }) => {
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onInsert(title, text);
+    onChangeInput(setTitle(''));
+    onChangeInput(setText(''));
+  };
+  const onChangeTitle = (e) => onChangeInput(setTitle(e.target.value));
+  const onChangeText = (e) => onChangeInput(setText(e.target.value));
   return (
-    <TdForm>
+    <TdForm onSubmit={onSubmit}>
       <TdInput>
-        <TdLabel>
+        <TdLabel htmlFor='title'>
           제목:
-          <TdInputText />
+          <TdInputText id='title' value={title} onChange={onChangeTitle} />
         </TdLabel>
-        <TdLabel>
+        <TdLabel htmlFor='text'>
           내용:
-          <TdInputText />
+          <TdInputText id='text' value={text} onChange={onChangeText} />
         </TdLabel>
       </TdInput>
-      <TdButton>추가하기</TdButton>
+      <div>
+        <TdButton>추가하기</TdButton>
+      </div>
     </TdForm>
   );
 };
@@ -51,7 +63,7 @@ const TdInputText = styled.input`
   font-size: 20px;
 `;
 
-const TdButton = styled.div`
+const TdButton = styled.button`
   border: none;
   padding: 10px;
   border-radius: 20px;
@@ -59,7 +71,7 @@ const TdButton = styled.div`
   background-color: teal;
   color: rgb(255, 255, 255);
   font-weight: 700;
-  width: 200px;
+  width: 15rem;
   text-align: center;
   cursor: pointer;
 `;

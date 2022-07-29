@@ -1,15 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const TodoItem = () => {
+const TodoItem = ({ item, onToggle, onRemove }) => {
   return (
     <Border>
-      <a>상세보기</a>
-      <h2>리액트</h2>
-      <p>리액트를 배워봅시다</p>
+      <Link to={`/detail/${item.id}`} item={item}>
+        상세보기
+      </Link>
+      <h2>{item.title}</h2>
+      <p>{item.text}</p>
       <TodosFooter>
-        <button className='delete'>삭제하기</button>
-        <button className='complete'>완료</button>
+        <button
+          className='delete'
+          onClick={() => {
+            onRemove(item.id);
+          }}
+        >
+          삭제하기
+        </button>
+        {item.done === false ? (
+          <button
+            className='complete'
+            onClick={() => {
+              onToggle(item.id);
+            }}
+          >
+            완료
+          </button>
+        ) : (
+          <button
+            className='complete'
+            onClick={() => {
+              onToggle(item.id);
+            }}
+          >
+            취소
+          </button>
+        )}
       </TodosFooter>
     </Border>
   );
@@ -19,7 +47,7 @@ export default TodoItem;
 
 const Border = styled.div`
   border: 4px solid teal;
-  width: 270px;
+  width: 20%;
   border-radius: 12px;
   padding: 12px 12px 24px;
   min-height: 150px;
